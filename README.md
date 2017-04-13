@@ -11,9 +11,9 @@
 
 首先我们需要获得一个Zookeeper的Docker镜像。
 
-1. 下载[Oracle JDK1.8](http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz)和[Zookeeper-3.4.8](http://ftp.riken.jp/net/apache/zookeeper/zookeeper-3.4.8/zookeeper-3.4.8.tar.gz)；
+1. 下载[Oracle JDK1.8](http://download.oracle.com/otn-pub/java/jdk/8u121-b13/jdk-8u121-linux-x64.tar.gz)和[Zookeeper-3.4.10](http://ftp.riken.jp/net/apache/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz)；
 2. `git clone https://github.com/lavenderx/docker-zookeeper.git`至本地，将下载好的JDK和Zookeeper 拷贝至刚刚clone的docker-zookeeper目录下；
-3. 运行`docker build -t lavenderx/zookeeper:3.4.8 .`生成Docker镜像。
+3. 运行`docker build -t lavenderx/zookeeper:3.4.10 .`生成Docker镜像。
 
 在ZK1上启动集群的第一个节点：利用环境变量SERVER_ID指明节点ID，并在/opt/zookeeper/conf/zoo.cfg中添加ZK集群节点配置信息，具体请详见Docker镜像的启动脚本[https://github.com/lavenderx/docker-zookeeper/blob/master/run.sh](https://github.com/lavenderx/docker-zookeeper/blob/master/run.sh)
 
@@ -24,7 +24,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_1=server.1=zk1:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=zk2:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=zk3:2888:3888 \
- lavenderx/zookeeper:3.4.8
+ lavenderx/zookeeper:3.4.10
 ```
 
 在ZK2上启动集群的第2个节点
@@ -36,7 +36,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_1=server.1=zk1:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=zk2:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=zk3:2888:3888 \
- lavenderx/zookeeper:3.4.8 
+ lavenderx/zookeeper:3.4.10 
 ```
 
 在ZK3上启动集群的第3个节点
@@ -48,7 +48,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_1=server.1=zk1:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=zk2:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=zk3:2888:3888 \
- lavenderx/zookeeper:3.4.8
+ lavenderx/zookeeper:3.4.10
 ```
 
 采用host方式的好处是直接利用host网络，配置简单、网络性能和原生进程一样，对于关注性能和稳定性的生产环境，host方式是一个较好的选择。
@@ -71,7 +71,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=localhost:2889:3889 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=localhost:2890:3890 \
  -e ADDITIONAL_ZOOKEEPER_4=clientPort=2181 \
- lavenderx/zookeeper:3.4.8
+ lavenderx/zookeeper:3.4.10
 
 docker run -d \
  --name=zk2 \
@@ -81,7 +81,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=localhost:2889:3889 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=localhost:2890:3890 \
  -e ADDITIONAL_ZOOKEEPER_4=clientPort=2182 \
- lavenderx/zookeeper:3.4.8
+ lavenderx/zookeeper:3.4.10
 
 docker run -d \
  --name=zk3 \
@@ -91,5 +91,5 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=localhost:2889:3889 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=localhost:2890:3890 \
  -e ADDITIONAL_ZOOKEEPER_4=clientPort=2183 \
- lavenderx/zookeeper:3.4.8
+ lavenderx/zookeeper:3.4.10
 ```
