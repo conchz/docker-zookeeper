@@ -2,15 +2,15 @@ FROM ubuntu:16.04
 
 MAINTAINER Zongzhi Bai <dolphineor@gmail.com>
 
-ADD jdk-8u121-linux-x64.tar.gz /usr/lib/jvm
-ADD zookeeper-3.4.10.tar.gz /opt
+ADD jdk-8u161-linux-x64.tar.gz /usr/lib/jvm
+ADD zookeeper-3.4.11.tar.gz /opt
 ADD run.sh /opt/run.sh
 
-RUN mv /usr/lib/jvm/jdk1.8.0_121 /usr/lib/jvm/oracle-jdk8 \
-	&& mv /opt/zookeeper-3.4.10 /opt/zookeeper \
+RUN mv /usr/lib/jvm/jdk1.8.0_161 /usr/lib/jvm/oracle-jdk8 \
+	&& mv /opt/zookeeper-3.4.11 /opt/zookeeper \
 	&& cp /opt/zookeeper/conf/zoo_sample.cfg /opt/zookeeper/conf/zoo.cfg \
-	&& rm -f /tmp/zookeeper-3.4.10.tar.gz \
-	&& rm -f /tmp/jdk-8u121-linux-x64.tar.gz \
+	&& rm -f /tmp/zookeeper-3.4.11.tar.gz \
+	&& rm -f /tmp/jdk-8u161-linux-x64.tar.gz \
     && mkdir -p /tmp/zookeeper \
     && chmod 0777 /opt/run.sh
 
