@@ -1,4 +1,5 @@
-# Zookeeper cluster with Docker
+ZooKeeper Cluster With Docker
+==========
 
 ![Zookeeper Cluster](zookeeper-cluster-diagram.png)
 
@@ -9,11 +10,10 @@
 
 我们可以利用host模式来搭建ZK集群。我们可以分别在三台的机器上用host模式启动一个ZK节点，监听2181, 2888, 3888等不同端口。比如三个主机的hostname分别为ZK1，ZK2和ZK3。我们要在不同主机上启动ZK节点。
 
-首先我们需要获得一个Zookeeper的Docker镜像。
+首先我们需要获得一个ZooKeeper的Docker镜像。
 
-1. 下载[Oracle JDK1.8](http://download.oracle.com/otn-pub/java/jdk/8u161-b12/2f38c3b165be4555a1fa6e98c45e0808/jdk-8u161-linux-x64.tar.gz)和[Zookeeper-3.4.11](http://ftp.riken.jp/net/apache/zookeeper/zookeeper-3.4.11/zookeeper-3.4.11.tar.gz)；
-2. `git clone https://github.com/owlgvt/docker-zookeeper.git`至本地，将下载好的JDK和Zookeeper 拷贝至刚刚clone的docker-zookeeper目录下；
-3. 运行`docker build -t owlgvt/zookeeper:3.4.11 .`生成Docker镜像。
+1. `git clone https://github.com/owlgvt/docker-zookeeper.git`至本地，进入docker-zookeeper目录下；
+2. 运行`docker build -t owlgvt/zookeeper:3.4.12 .`生成Docker镜像。
 
 在ZK1上启动集群的第一个节点：利用环境变量SERVER_ID指明节点ID，并在/opt/zookeeper/conf/zoo.cfg中添加ZK集群节点配置信息，具体请详见Docker镜像的启动脚本[https://github.com/owlgvt/docker-zookeeper/blob/master/run.sh](https://github.com/owlgvt/docker-zookeeper/blob/master/run.sh)
 
@@ -24,7 +24,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_1=server.1=zk1:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=zk2:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=zk3:2888:3888 \
- owlgvt/zookeeper:3.4.11
+ owlgvt/zookeeper:3.4.12
 ```
 
 在ZK2上启动集群的第2个节点
@@ -36,7 +36,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_1=server.1=zk1:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=zk2:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=zk3:2888:3888 \
- owlgvt/zookeeper:3.4.11
+ owlgvt/zookeeper:3.4.12
 ```
 
 在ZK3上启动集群的第3个节点
@@ -48,7 +48,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_1=server.1=zk1:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=zk2:2888:3888 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=zk3:2888:3888 \
- owlgvt/zookeeper:3.4.11
+ owlgvt/zookeeper:3.4.12
 ```
 
 采用host方式的好处是直接利用host网络，配置简单、网络性能和原生进程一样，对于关注性能和稳定性的生产环境，host方式是一个较好的选择。
@@ -71,7 +71,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=localhost:2889:3889 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=localhost:2890:3890 \
  -e ADDITIONAL_ZOOKEEPER_4=clientPort=2181 \
- owlgvt/zookeeper:3.4.11
+ owlgvt/zookeeper:3.4.12
 
 docker run -d \
  --name=zk2 \
@@ -81,7 +81,7 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=localhost:2889:3889 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=localhost:2890:3890 \
  -e ADDITIONAL_ZOOKEEPER_4=clientPort=2182 \
- owlgvt/zookeeper:3.4.11
+ owlgvt/zookeeper:3.4.12
 
 docker run -d \
  --name=zk3 \
@@ -91,5 +91,5 @@ docker run -d \
  -e ADDITIONAL_ZOOKEEPER_2=server.2=localhost:2889:3889 \
  -e ADDITIONAL_ZOOKEEPER_3=server.3=localhost:2890:3890 \
  -e ADDITIONAL_ZOOKEEPER_4=clientPort=2183 \
- owlgvt/zookeeper:3.4.11
+ owlgvt/zookeeper:3.4.12
 ```
